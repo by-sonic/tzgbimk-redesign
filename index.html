@@ -81,11 +81,12 @@ button,input,select,textarea{font:inherit;color:inherit}
 .menu-open .burger i:nth-child(2){top:22px;transform:rotate(-45deg)}
 
 /* FILM */
-.film{position:relative;height:460vh;background:var(--paper)}
+.film{position:relative;height:620vh;background:var(--paper)}
 .film__stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .film__frame{position:absolute;inset:0;background:#0d1220;clip-path:inset(var(--it,0px) var(--is,0px) var(--ib,0px) var(--is,0px) round var(--fr,0px));will-change:clip-path}
 .film__frame canvas{position:absolute;inset:0;width:100%;height:100%}
 .film__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.film__shade::after{content:"";position:absolute;inset:0;background:#080a12;opacity:var(--dim,0)}
 .film__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,18,.55) 0%,rgba(8,10,18,0) 30%,rgba(8,10,18,0) 50%,rgba(8,10,18,.72) 100%);pointer-events:none}
 .scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--pad) clamp(96px,14vh,150px);color:#fff;pointer-events:none;opacity:0;will-change:opacity,transform}
 .scene .tag{margin-bottom:22px;opacity:.85}
@@ -340,7 +341,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   .panel--cta h3{font-size:clamp(22px,6.4vw,28px)}
   .panel{padding:20px}
   .cta h2{font-size:clamp(30px,8.6vw,44px)}
-  .film{height:400vh}
+  .film{height:520vh}
   .scene{padding-bottom:110px}
   .scene__row p{font-size:15px}
   .film__ui div{font-size:11px}
@@ -397,7 +398,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   <div class="film__stick">
     <div class="film__frame" id="frame">
       <img class="film__poster" id="poster" src="frames/d/0001.webp" alt="Склад готовой продукции завода на рассвете: штабели железобетонных опор">
-      <canvas id="cv" data-frames="121"></canvas>
+      <canvas id="cv" data-frames="189"></canvas>
       <div class="film__shade"></div>
 
       <div class="scene" data-a="-1" data-b=".24">
@@ -768,6 +769,7 @@ button,input,select,textarea{font:inherit;color:inherit}
     frame.style.setProperty('--ib',(e*innerHeight*.05).toFixed(1)+'px');
     frame.style.setProperty('--is',(e*innerWidth*(mobile?.03:.035)).toFixed(1)+'px');
     frame.style.setProperty('--fr',(e*28).toFixed(1)+'px');
+    frame.style.setProperty('--dim',(e*.42).toFixed(3));
     var seg=[[0,.26],[.26,.54],[.54,.84]];
     fuiItems.forEach(function(el,k){var q=clamp((p-seg[k][0])/(seg[k][1]-seg[k][0]),0,1);el.style.setProperty('--p',(q*100).toFixed(1)+'%');el.classList.toggle('on',p>=seg[k][0]&&p<seg[k][1])});
     fui.style.opacity=p>.84?0:1;hint.style.opacity=p>.03?0:1;
