@@ -1,0 +1,15 @@
+{
+ "name": "Толмачёвский завод ЖБ и МК",
+ "short_name": "ТЗЖБиМК",
+ "icons": [
+  {
+   "src": "/android-chrome-192x192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  }
+ ],
+ "theme_color": "#2440f5",
+ "background_color": "#ecebe6",
+ "display": "standalone",
+ "start_url": "/"
+}

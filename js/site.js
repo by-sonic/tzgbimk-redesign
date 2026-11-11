@@ -114,7 +114,7 @@
       fetch(action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }, function () { return { ok: false }; }); })
         .then(function (res) {
-          if (res.ok && res.j && res.j.success !== false) done('Спасибо! Заявка принята — менеджер свяжется с вами в рабочее время.', true);
+          if (res.ok && res.j && res.j.success !== false) { if (window.ym && window.SITE && SITE.ym) ym(SITE.ym, 'reachGoal', 'request'); } if (res.ok && res.j && res.j.success !== false) done('Спасибо! Заявка принята — менеджер свяжется с вами в рабочее время.', true);
           else if (res.j && res.j.errors) done('Проверьте поля: ' + Object.keys(res.j.errors).map(function (k) { return res.j.errors[k][0]; }).join(' '), false);
           else fallback();
         }, fallback);
@@ -288,4 +288,36 @@
     } else els.forEach(function (el) { el.classList.add('in'); });
   }
   var yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
+})();
+
+/* Лайтбокс для галерей: стрелки, Esc, свайп */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('[data-lightbox]'));if(!links.length)return;
+  var box,img,num,i=0;
+  function show(n){i=(n+links.length)%links.length;img.src=links[i].getAttribute('href');num.textContent=(i+1)+' / '+links.length}
+  function close(){if(box){box.remove();box=null;document.removeEventListener('keydown',key)}}
+  function key(e){if(e.key==='Escape')close();else if(e.key==='ArrowRight')show(i+1);else if(e.key==='ArrowLeft')show(i-1)}
+  links.forEach(function(a,n){a.addEventListener('click',function(e){
+    e.preventDefault();box=document.createElement('div');box.className='lb';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');
+    box.innerHTML='<img alt=""><button class="lb__prev" type="button" aria-label="Предыдущее">‹</button><button class="lb__next" type="button" aria-label="Следующее">›</button><button class="lb__close" type="button" aria-label="Закрыть">×</button><div class="lb__n"></div>';
+    img=box.querySelector('img');num=box.querySelector('.lb__n');document.body.appendChild(box);show(n);
+    box.addEventListener('click',function(ev){var t=ev.target;if(t.classList.contains('lb__prev'))show(i-1);else if(t.classList.contains('lb__next'))show(i+1);else if(t!==img)close()});
+    var x0=null;box.addEventListener('touchstart',function(ev){x0=ev.touches[0].clientX},{passive:true});
+    box.addEventListener('touchend',function(ev){if(x0===null)return;var dx=ev.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)show(i+(dx<0?1:-1));x0=null});
+    document.addEventListener('keydown',key);
+  })});
+})();
+
+/* Плашка cookie и цели Метрики */
+(function(){
+  var c=document.getElementById('cookie');
+  try{if(c&&!localStorage.getItem('cookie-ok'))c.hidden=false}catch(e){}
+  document.addEventListener('click',function(e){
+    var ok=e.target.closest&&e.target.closest('[data-cookie-ok]');
+    if(ok&&c){c.hidden=true;try{localStorage.setItem('cookie-ok','1')}catch(err){}}
+    var a=e.target.closest&&e.target.closest('a[href]');if(!a||!window.ym||!window.SITE||!SITE.ym)return;
+    var h=a.getAttribute('href');
+    if(h.indexOf('tel:')===0)ym(SITE.ym,'reachGoal','phone');
+    else if(/whatsapp|wa\.me/.test(h))ym(SITE.ym,'reachGoal','whatsapp');
+  });
 })();
