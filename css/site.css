@@ -574,26 +574,3 @@ a.prow__name:hover{color:var(--blue)}
 .gal--docs a{aspect-ratio:3/4;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
 .gal--docs img{object-fit:contain;padding:8px}
 
-/* Бирка разработчика в подвале: маркировка как на ЖБИ, штамп ОТК «ставится» при наведении */
-.mark{position:relative;display:inline-flex;align-items:center;margin-top:28px;color:rgba(255,255,255,.45);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.mark__tag{display:grid;grid-template-columns:repeat(4,auto);border:1px dashed rgba(255,255,255,.22);border-radius:6px;transition:border-color .3s}
-.mark__tag>span{display:flex;flex-direction:column;gap:3px;padding:8px 14px;border-left:1px dashed rgba(255,255,255,.14)}
-.mark__tag>span:first-child{border-left:0}
-.mark__tag i{font-style:normal;opacity:.6}
-.mark__tag b{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.02em;color:rgba(255,255,255,.75);text-transform:none;white-space:nowrap}
-.mark__by b{color:#fff}
-.mark__by em{font-style:normal;display:inline-block;color:var(--blue-l);transition:transform .3s var(--ease)}
-.mark__stamp{position:absolute;right:-50px;top:50%;width:64px;height:64px;margin-top:-32px;border:2px solid var(--blue-l);border-radius:50%;display:grid;place-content:center;text-align:center;color:var(--blue-l);line-height:1;transform:rotate(-14deg) scale(1.9);opacity:0;transition:transform .35s cubic-bezier(.5,1.8,.5,1),opacity .2s;pointer-events:none}
-.mark__stamp::before{content:"";position:absolute;inset:4px;border:1px solid currentColor;border-radius:50%;opacity:.6}
-.mark__stamp b{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.04em}
-.mark__stamp small{font-size:7px;letter-spacing:.14em;margin-top:3px}
-.mark:hover .mark__tag,.mark:focus-visible .mark__tag{border-color:var(--blue-l)}
-.mark:hover .mark__stamp,.mark:focus-visible .mark__stamp{transform:rotate(-14deg) scale(1);opacity:.95}
-.mark:hover .mark__by em{transform:translate(2px,-2px)}
-@media (max-width:700px){
-  .mark__tag{grid-template-columns:repeat(2,auto)}
-  .mark__tag>span:nth-child(3){border-left:0}
-  .mark__tag>span:nth-child(n+3){border-top:1px dashed rgba(255,255,255,.14)}
-  .mark__stamp{right:-62px;opacity:.55;transform:rotate(-14deg) scale(.85)}
-}
-@media (prefers-reduced-motion:reduce){.mark__stamp{transition:none}}
